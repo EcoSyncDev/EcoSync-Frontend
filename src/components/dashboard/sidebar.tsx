@@ -10,7 +10,7 @@ const navigation: { label: string; icon: IconName; href?: string }[] = [
   { label: "Monitoramento", icon: "monitoring", href: "/monitoramento" },
   { label: "Metas", icon: "target", href: "/metas" },
   { label: "Relatórios", icon: "report", href: "/relatorios" },
-  { label: "Configurações", icon: "settings" },
+  { label: "Configurações", icon: "settings", href: "/configuracoes" },
 ];
 
 export function Sidebar() {
