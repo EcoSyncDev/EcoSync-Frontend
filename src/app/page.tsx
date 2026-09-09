@@ -2,6 +2,7 @@
 
 import { DashboardIndicators } from "@/components/dashboard/dashboard-indicators";
 import { DashboardOverview } from "@/components/dashboard/dashboard-overview";
+import { DashboardActivity } from "@/components/dashboard/dashboard-activity";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         </p>
         <DashboardIndicators />
         <DashboardOverview />
+        <DashboardActivity />
       </section>
     </DashboardShell>
   );
