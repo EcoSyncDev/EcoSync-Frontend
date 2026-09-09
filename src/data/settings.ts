@@ -31,6 +31,7 @@ export const initialNotifications: Notifications = {
 
 export const appearanceOptions = [
   { id: "light", label: "Claro" },
+  { id: "dark", label: "Escuro" },
   { id: "system", label: "Sistema" },
 ] as const;
 export type Appearance = (typeof appearanceOptions)[number]["id"];

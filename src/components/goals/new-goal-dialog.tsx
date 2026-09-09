@@ -6,7 +6,7 @@ export function NewGoalDialog({ onDemoCreated }: { onDemoCreated: () => void }) 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const fieldClassName = "mt-2 min-h-11 w-full min-w-0 rounded-lg border border-outline bg-white px-3 py-2 text-sm text-brand-dark";
+  const fieldClassName = "mt-2 min-h-11 w-full min-w-0 rounded-lg border border-outline bg-surface px-3 py-2 text-sm text-brand-dark";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -17,8 +17,8 @@ export function NewGoalDialog({ onDemoCreated }: { onDemoCreated: () => void }) 
 
   return (
     <>
-      <button ref={triggerRef} type="button" onClick={() => dialogRef.current?.showModal()} className="min-h-11 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark">Nova meta</button>
-      <dialog ref={dialogRef} aria-labelledby="new-goal-title" aria-describedby="new-goal-description" onClose={() => { formRef.current?.reset(); triggerRef.current?.focus(); }} className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-outline bg-white p-5 text-foreground shadow-xl backdrop:bg-black/40 sm:p-6">
+      <button ref={triggerRef} type="button" onClick={() => dialogRef.current?.showModal()} className="min-h-11 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-on-brand hover:bg-brand-hover">Nova meta</button>
+      <dialog ref={dialogRef} aria-labelledby="new-goal-title" aria-describedby="new-goal-description" onClose={() => { formRef.current?.reset(); triggerRef.current?.focus(); }} className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-outline bg-surface p-5 text-foreground shadow-xl backdrop:bg-black/40 sm:p-6">
         <h2 id="new-goal-title" className="text-xl font-semibold text-brand-dark">Nova meta</h2>
         <p id="new-goal-description" className="mt-2 text-sm leading-6 text-muted">Formulário demonstrativo. Os dados não serão salvos nem adicionados à lista.</p>
         <form ref={formRef} onSubmit={handleSubmit} className="mt-5 space-y-4">
@@ -45,7 +45,7 @@ export function NewGoalDialog({ onDemoCreated }: { onDemoCreated: () => void }) 
           </div>
           <div className="flex flex-wrap justify-end gap-3 border-t border-outline pt-4">
             <button type="button" onClick={() => dialogRef.current?.close()} className="min-h-11 rounded-lg border border-outline px-4 py-2 text-sm font-medium text-brand-dark hover:bg-brand-light">Cancelar</button>
-            <button type="submit" className="min-h-11 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark">Criar meta</button>
+            <button type="submit" className="min-h-11 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-on-brand hover:bg-brand-hover">Criar meta</button>
           </div>
         </form>
       </dialog>

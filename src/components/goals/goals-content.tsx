@@ -21,7 +21,7 @@ export function GoalsContent() {
       <section aria-label="Resumo das metas">
         <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {summary.map((item) => (
-            <div key={item.label} className="min-w-0 rounded-2xl border border-outline bg-white p-4 shadow-sm">
+            <div key={item.label} className="min-w-0 rounded-2xl border border-outline bg-surface p-4 shadow-sm">
               <dt className="text-xs leading-5 text-muted">{item.label}</dt>
               <dd className="mt-2 text-2xl font-semibold text-brand-dark tabular-nums">{item.value}</dd>
             </div>
@@ -41,7 +41,7 @@ export function GoalsContent() {
           <legend className="mb-3 text-sm font-medium text-brand-dark">Filtrar por status</legend>
           <div className="flex flex-wrap gap-2">
             {goalFilters.map((option) => (
-              <button key={option.id} type="button" aria-pressed={filter === option.id} onClick={() => setFilter(option.id)} className={`min-h-11 rounded-lg border px-4 py-2 text-sm ${filter === option.id ? "border-brand bg-brand-light font-semibold text-brand-dark underline decoration-2 underline-offset-4" : "border-outline bg-white text-muted hover:bg-brand-light/50"}`}>{option.label}</button>
+              <button key={option.id} type="button" aria-pressed={filter === option.id} onClick={() => setFilter(option.id)} className={`min-h-11 rounded-lg border px-4 py-2 text-sm ${filter === option.id ? "border-brand bg-brand-light font-semibold text-brand-dark underline decoration-2 underline-offset-4" : "border-outline bg-surface text-muted hover:bg-brand-light/50"}`}>{option.label}</button>
             ))}
           </div>
         </fieldset>

@@ -26,7 +26,7 @@ export function MonitoringContent() {
         <legend className="mb-3 text-sm font-medium text-brand-dark">Período de acompanhamento</legend>
         <div className="flex flex-wrap gap-2">
           {monitoringPeriods.map((option) => (
-            <button key={option.id} type="button" aria-pressed={period === option.id} onClick={() => setPeriod(option.id)} className={`min-h-11 rounded-lg border px-4 py-2 text-sm transition-colors ${period === option.id ? "border-brand bg-brand-light font-semibold text-brand-dark underline decoration-2 underline-offset-4" : "border-outline bg-white text-muted hover:bg-brand-light/50"}`}>
+            <button key={option.id} type="button" aria-pressed={period === option.id} onClick={() => setPeriod(option.id)} className={`min-h-11 rounded-lg border px-4 py-2 text-sm transition-colors ${period === option.id ? "border-brand bg-brand-light font-semibold text-brand-dark underline decoration-2 underline-offset-4" : "border-outline bg-surface text-muted hover:bg-brand-light/50"}`}>
               {option.label}
             </button>
           ))}
@@ -37,7 +37,7 @@ export function MonitoringContent() {
         <IndicatorCard title="Energia" value={`${number.format(totals.energy)} kWh`} description={`Consumo acumulado em ${label}. Média de ${number.format(totals.energy / data.days)} kWh por dia.`} icon="energy" comparison={`${data.energyReduction}% abaixo do período anterior equivalente`} trend="down" />
         <IndicatorCard title="Água" value={`${number.format(totals.water)} L`} description={`Consumo acumulado em ${label}. Média de ${number.format(totals.water / data.days)} L por dia.`} icon="water" comparison={`${data.waterReduction}% abaixo do período anterior equivalente`} trend="down" />
       </section>
-      <section aria-labelledby="history-title" className="min-w-0 rounded-2xl border border-outline bg-white p-5 shadow-sm">
+      <section aria-labelledby="history-title" className="min-w-0 rounded-2xl border border-outline bg-surface p-5 shadow-sm">
         <h2 id="history-title" className="text-base font-semibold text-brand-dark">Histórico de consumo</h2>
         <p className="mt-1 text-sm leading-6 text-muted">{label} · Gráficos com escalas independentes: energia em kWh e água em litros.</p>
         <div className="mt-5 grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -45,7 +45,7 @@ export function MonitoringContent() {
           <ConsumptionChart title="Água" unit="L" metric="water" points={data.points} grouping={data.grouping} />
         </div>
       </section>
-      <section aria-labelledby="complementary-title" className="rounded-2xl border border-outline bg-white p-5 shadow-sm">
+      <section aria-labelledby="complementary-title" className="rounded-2xl border border-outline bg-surface p-5 shadow-sm">
         <h2 id="complementary-title" className="text-base font-semibold text-brand-dark">Indicadores complementares</h2>
         <p className="mt-1 text-xs leading-5 text-muted">Estimativas demonstrativas para {label}. Médias calculadas sobre {data.days} dias.</p>
         <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">

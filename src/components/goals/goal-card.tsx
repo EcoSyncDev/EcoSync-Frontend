@@ -5,7 +5,7 @@ export function GoalCard({ goal }: { goal: Goal }) {
   const percentage = Math.min(100, Math.max(0, goal.progress));
 
   return (
-    <article className={`min-w-0 rounded-2xl border border-outline bg-white p-5 shadow-sm ${goal.completed ? "border-l-4 border-l-brand" : ""}`}>
+    <article className={`min-w-0 rounded-2xl border border-outline bg-surface p-5 shadow-sm ${goal.completed ? "border-l-4 border-l-brand" : ""}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex min-w-0 flex-1 items-start gap-3">
           <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-light text-brand"><Icon name={goal.icon} /></span>
@@ -20,7 +20,7 @@ export function GoalCard({ goal }: { goal: Goal }) {
         <p className="text-muted">{goal.currentProgress}</p>
         <span className="font-semibold text-brand tabular-nums">{percentage}%</span>
       </div>
-      <div role="progressbar" aria-labelledby={`goal-title-${goal.id}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percentage} className="mt-3 h-2 overflow-hidden rounded-full bg-brand-light">
+      <div role="progressbar" aria-labelledby={`goal-title-${goal.id}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percentage} className="mt-3 h-2 overflow-hidden rounded-full bg-track">
         <div className="h-full rounded-full bg-brand" style={{ width: `${percentage}%` }} />
       </div>
       <p className="mt-4 text-xs leading-5 text-muted">{goal.period}</p>

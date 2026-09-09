@@ -4,16 +4,49 @@
   color-scheme: light;
   --background: #f6f8f7;
   --foreground: #243d32;
+  --surface: #ffffff;
+  --brand: #278455;
+  --brand-dark: #193f2d;
+  --brand-light: #e8f4ed;
+  --brand-hover: #193f2d;
+  --on-brand: #ffffff;
+  --muted: #66766d;
+  --outline: #e0e8e2;
+  --sidebar: #ffffff;
+  --track: #e8f4ed;
+  --control-outline: #e0e8e2;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --background: #0d1110;
+  --foreground: #e3e7e5;
+  --surface: #181d1a;
+  --brand: #75dca3;
+  --brand-dark: #f0f3f1;
+  --brand-light: #202e26;
+  --brand-hover: #99e8bc;
+  --on-brand: #10241a;
+  --muted: #aab3ae;
+  --outline: #343c37;
+  --sidebar: #131815;
+  --track: #303833;
+  --control-outline: #66736b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand: #278455;
-  --color-brand-dark: #193f2d;
-  --color-brand-light: #e8f4ed;
-  --color-muted: #66766d;
-  --color-outline: #e0e8e2;
+  --color-surface: var(--surface);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+  --color-brand-hover: var(--brand-hover);
+  --color-on-brand: var(--on-brand);
+  --color-muted: var(--muted);
+  --color-outline: var(--outline);
+  --color-sidebar: var(--sidebar);
+  --color-track: var(--track);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -22,6 +55,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Campos mantêm contornos acessíveis; bordas decorativas dos cards são mais discretas. */
+input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+  border-color: var(--control-outline);
 }
 
 :focus-visible {

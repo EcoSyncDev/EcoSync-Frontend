@@ -15,9 +15,9 @@ export function ExportReportDialog({ period }: { period: string }) {
 
   return (
     <div>
-      <button ref={triggerRef} type="button" onClick={() => { setFeedback(""); dialogRef.current?.showModal(); }} className="min-h-11 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark">Exportar relatório</button>
+      <button ref={triggerRef} type="button" onClick={() => { setFeedback(""); dialogRef.current?.showModal(); }} className="min-h-11 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-on-brand hover:bg-brand-hover">Exportar relatório</button>
       <p role="status" className="mt-2 text-sm leading-6 text-brand">{feedback}</p>
-      <dialog ref={dialogRef} aria-labelledby="export-title" aria-describedby="export-description" onClose={() => triggerRef.current?.focus()} className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md overflow-y-auto rounded-2xl border border-outline bg-white p-6 text-foreground shadow-xl backdrop:bg-black/40">
+      <dialog ref={dialogRef} aria-labelledby="export-title" aria-describedby="export-description" onClose={() => triggerRef.current?.focus()} className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md overflow-y-auto rounded-2xl border border-outline bg-surface p-6 text-foreground shadow-xl backdrop:bg-black/40">
         <h2 id="export-title" className="text-xl font-semibold text-brand-dark">Exportar relatório</h2>
         <p id="export-description" className="mt-2 text-sm leading-6 text-muted">{period}. Escolha um formato para simular a exportação. Nenhum arquivo será gerado.</p>
         <div className="mt-5 grid grid-cols-2 gap-3">

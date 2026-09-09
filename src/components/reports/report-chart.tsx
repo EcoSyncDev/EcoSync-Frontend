@@ -13,7 +13,7 @@ export function ReportChart({ metric, title, unit, points }: { metric: ReportMet
               <span className="text-muted">{point.label}</span>
               <span className="font-medium text-brand-dark tabular-nums">{formatReportValue(point[metric], metric)}{metric !== "savings" && ` ${unit}`}</span>
             </div>
-            <div aria-hidden="true" className="h-2 rounded-full bg-brand-light">
+            <div aria-hidden="true" className="h-2 rounded-full bg-track">
               <div className="h-full rounded-full bg-brand" style={{ width: `${(point[metric] / maximum) * 100}%` }} />
             </div>
           </li>

@@ -12,12 +12,12 @@ export function EnvironmentalImpactCard({ progress, label, carbonAvoided, waterS
   const percentage = Math.min(100, Math.max(0, progress));
 
   return (
-    <section aria-labelledby="impact-title" className="min-w-0 rounded-2xl border border-outline bg-white p-5 shadow-sm">
+    <section aria-labelledby="impact-title" className="min-w-0 rounded-2xl border border-outline bg-surface p-5 shadow-sm">
       <h2 id="impact-title" className="text-base font-semibold text-brand-dark">Impacto</h2>
       <p className="mt-1 text-sm text-muted">Mês atual · Dados demonstrativos</p>
       <div role="img" aria-label={`${label}: ${percentage}%`} className="relative mx-auto mt-5 size-36">
         <svg aria-hidden="true" viewBox="0 0 120 120" className="size-full -rotate-90" fill="none" strokeWidth="9">
-          <circle cx="60" cy="60" r="51" className="stroke-brand-light" />
+          <circle cx="60" cy="60" r="51" className="stroke-track" />
           <circle cx="60" cy="60" r="51" pathLength="100" strokeDasharray={`${percentage} 100`} strokeLinecap="round" className="stroke-brand" />
         </svg>
         <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center text-3xl font-semibold tracking-tight text-brand-dark tabular-nums">{percentage}%</span>

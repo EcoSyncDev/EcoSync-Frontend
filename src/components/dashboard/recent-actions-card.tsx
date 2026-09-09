@@ -3,7 +3,7 @@ import type { RecentAction } from "@/data/dashboard-activity";
 
 export function RecentActionsCard({ actions }: { actions: readonly RecentAction[] }) {
   return (
-    <section aria-labelledby="recent-actions-title" className="min-w-0 rounded-2xl border border-outline bg-white p-5 shadow-sm">
+    <section aria-labelledby="recent-actions-title" className="min-w-0 rounded-2xl border border-outline bg-surface p-5 shadow-sm">
       <h2 id="recent-actions-title" className="text-base font-semibold text-brand-dark">Ações recentes</h2>
       <p className="mt-1 text-sm text-muted">Últimas atividades · Dados demonstrativos</p>
       <ul className="mt-5 divide-y divide-outline">

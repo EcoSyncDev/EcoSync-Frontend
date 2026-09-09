@@ -17,7 +17,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="border-b border-outline bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:overflow-y-auto lg:border-r lg:border-b-0">
+    <aside className="border-b border-outline bg-sidebar lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:overflow-y-auto lg:border-r lg:border-b-0">
       <Link href="/" aria-label="EcoSync — início" className="mx-6 my-7 flex w-fit items-center gap-3 rounded-lg">
         <Image
           src="/logo-ecosync.png"

@@ -2,7 +2,7 @@ import { formatReportValue, reportComparison, reportMetrics, type ReportValues }
 
 export function ReportComparison({ current, previous, previousLabel }: { current: ReportValues; previous: ReportValues; previousLabel: string }) {
   return (
-    <section aria-labelledby="comparison-title" className="rounded-2xl border border-outline bg-white p-5 shadow-sm">
+    <section aria-labelledby="comparison-title" className="rounded-2xl border border-outline bg-surface p-5 shadow-sm">
       <h2 id="comparison-title" className="text-base font-semibold text-brand-dark">Comparação de desempenho</h2>
       <p className="mt-1 text-sm leading-6 text-muted">Período anterior: {previousLabel}. Menor consumo e maior impacto positivo representam melhora.</p>
       <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">

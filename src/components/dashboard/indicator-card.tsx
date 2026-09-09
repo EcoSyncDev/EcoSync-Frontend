@@ -11,7 +11,7 @@ export type IndicatorCardProps = {
 
 export function IndicatorCard({ title, value, description, icon, comparison, trend }: IndicatorCardProps) {
   return (
-    <article className="flex h-full min-w-0 flex-col rounded-2xl border border-outline bg-white p-5 shadow-sm">
+    <article className="flex h-full min-w-0 flex-col rounded-2xl border border-outline bg-surface p-5 shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-sm font-medium text-muted">{title}</h3>
         <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-light text-brand">
