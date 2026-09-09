@@ -8,7 +8,7 @@ import { Icon, type IconName } from "@/components/ui/icon";
 const navigation: { label: string; icon: IconName; href?: string }[] = [
   { label: "Dashboard", icon: "dashboard", href: "/" },
   { label: "Monitoramento", icon: "monitoring", href: "/monitoramento" },
-  { label: "Metas", icon: "target" },
+  { label: "Metas", icon: "target", href: "/metas" },
   { label: "Relatórios", icon: "report" },
   { label: "Configurações", icon: "settings" },
 ];
