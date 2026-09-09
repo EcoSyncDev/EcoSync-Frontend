@@ -9,7 +9,7 @@ const navigation: { label: string; icon: IconName; href?: string }[] = [
   { label: "Dashboard", icon: "dashboard", href: "/" },
   { label: "Monitoramento", icon: "monitoring", href: "/monitoramento" },
   { label: "Metas", icon: "target", href: "/metas" },
-  { label: "Relatórios", icon: "report" },
+  { label: "Relatórios", icon: "report", href: "/relatorios" },
   { label: "Configurações", icon: "settings" },
 ];
 
