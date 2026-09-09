@@ -1,6 +1,7 @@
 ﻿import { DashboardShell } from "@/components/dashboard/dashboard-shell";
 
 import { DashboardIndicators } from "@/components/dashboard/dashboard-indicators";
+import { DashboardOverview } from "@/components/dashboard/dashboard-overview";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
           Acompanhe sua jornada sustentável e cada passo rumo a um futuro mais verde.
         </p>
         <DashboardIndicators />
+        <DashboardOverview />
       </section>
     </DashboardShell>
   );
