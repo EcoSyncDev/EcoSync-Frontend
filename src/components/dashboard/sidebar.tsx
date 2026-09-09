@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Icon, type IconName } from "@/components/ui/icon";
 
 const navigation: { label: string; icon: IconName; href?: string }[] = [
@@ -13,9 +14,13 @@ export function Sidebar() {
   return (
     <aside className="border-b border-outline bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:overflow-y-auto lg:border-r lg:border-b-0">
       <Link href="/" aria-label="EcoSync — início" className="mx-6 my-7 flex w-fit items-center gap-3 rounded-lg">
-        <span className="flex size-10 items-center justify-center rounded-xl bg-brand text-white shadow-sm">
-          <Icon name="leaf" className="size-6" />
-        </span>
+        <Image
+          src="/logo-ecosync.png"
+          alt=""
+          width={40}
+          height={40}
+          className="size-10 shrink-0 object-contain"
+        />
         <span className="text-2xl font-semibold tracking-tight text-brand-dark">Eco<span className="text-brand">Sync</span></span>
       </Link>
       <nav aria-label="Navegação principal" className="px-4 pb-5 lg:mt-8">
