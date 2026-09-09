@@ -1,16 +1,21 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Icon, type IconName } from "@/components/ui/icon";
 
 const navigation: { label: string; icon: IconName; href?: string }[] = [
   { label: "Dashboard", icon: "dashboard", href: "/" },
-  { label: "Monitoramento", icon: "monitoring" },
+  { label: "Monitoramento", icon: "monitoring", href: "/monitoramento" },
   { label: "Metas", icon: "target" },
   { label: "Relatórios", icon: "report" },
   { label: "Configurações", icon: "settings" },
 ];
 
 export function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className="border-b border-outline bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:overflow-y-auto lg:border-r lg:border-b-0">
       <Link href="/" aria-label="EcoSync — início" className="mx-6 my-7 flex w-fit items-center gap-3 rounded-lg">
@@ -29,10 +34,10 @@ export function Sidebar() {
           {navigation.map(({ label, icon, href }) => (
             <li key={label}>
               {href ? (
-                <Link href={href} aria-current="page" className="flex min-h-12 items-center gap-3 rounded-xl bg-brand-light px-3 text-sm font-semibold text-brand-dark transition-colors hover:bg-brand-light/70">
-                  <Icon name={icon} className="size-5 shrink-0 text-brand" />
+                <Link href={href} aria-current={pathname === href ? "page" : undefined} className={`flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm transition-colors hover:bg-brand-light/70 ${pathname === href ? "bg-brand-light font-semibold text-brand-dark" : "text-muted"}`}>
+                  <Icon name={icon} className={`size-5 shrink-0 ${pathname === href ? "text-brand" : ""}`} />
                   {label}
-                  <span className="ml-auto size-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                  {pathname === href && <span className="ml-auto size-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />}
                 </Link>
               ) : (
                 <button type="button" disabled title="Em breve" aria-label={`${label} — em breve`} className="flex min-h-12 w-full cursor-not-allowed items-center gap-3 rounded-xl px-3 text-left text-sm text-muted">
