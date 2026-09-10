@@ -6,7 +6,7 @@ import { DataState } from "@/components/ui/data-state";
 import { ExportReportDialog } from "@/components/reports/export-report-dialog";
 import { ReportChart } from "@/components/reports/report-chart";
 import { ReportComparison } from "@/components/reports/report-comparison";
-import { formatReportValue, reportMetrics, reportPeriods, reports, sumReportPoints, type ReportPeriod } from "@/data/reports";
+import { formatReportValue, getReports, reportMetrics, reportPeriods, sumReportPoints, type ReportPeriod } from "@/services/reports-service";
 
 type ReportsStatus = "success" | "loading" | "empty" | "error";
 
@@ -27,7 +27,7 @@ export function ReportsContent() {
     );
   }
 
-  const data = reports[period];
+  const data = getReports(period);
   const totals = sumReportPoints(data.points);
 
   return (

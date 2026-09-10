@@ -1,4 +1,4 @@
-import { formatReportValue, type ReportMetric, type ReportPoint } from "@/data/reports";
+import { formatReportValue, type ReportMetric, type ReportPoint } from "@/services/reports-service";
 
 export function ReportChart({ metric, title, unit, points }: { metric: ReportMetric; title: string; unit: string; points: readonly ReportPoint[] }) {
   const maximum = Math.max(1, ...points.map((point) => point[metric]));

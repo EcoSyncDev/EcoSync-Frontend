@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IndicatorCard } from "@/components/dashboard/indicator-card";
 import { ConsumptionChart } from "@/components/monitoring/consumption-chart";
 import { DataState } from "@/components/ui/data-state";
-import { monitoringData, monitoringPeriods, type MonitoringPeriod } from "@/data/monitoring";
+import { getMonitoringData, monitoringPeriods, type MonitoringPeriod } from "@/services/monitoring-service";
 
 const number = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
 const currency = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
@@ -24,7 +24,7 @@ export function MonitoringContent() {
     );
   }
 
-  const data = monitoringData[period];
+  const data = getMonitoringData(period);
   const label = monitoringPeriods.find((option) => option.id === period)!.label;
   const totals = data.points.reduce((sum, point) => ({ energy: sum.energy + point.energy, water: sum.water + point.water }), { energy: 0, water: 0 });
   const complementary = [

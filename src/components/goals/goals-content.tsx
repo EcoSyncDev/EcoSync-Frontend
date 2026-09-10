@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GoalCard } from "@/components/goals/goal-card";
 import { NewGoalDialog } from "@/components/goals/new-goal-dialog";
 import { DataState } from "@/components/ui/data-state";
-import { filterGoals, goalFilters, goalsSummary, type GoalFilter } from "@/data/goals";
+import { getGoals, getGoalsSummary, goalFilters, type GoalFilter } from "@/services/goals-service";
 
 type GoalsStatus = "success" | "loading" | "empty" | "error";
 
@@ -26,7 +26,8 @@ export function GoalsContent() {
     );
   }
 
-  const visibleGoals = filterGoals(filter);
+  const visibleGoals = getGoals(filter);
+  const goalsSummary = getGoalsSummary();
   const summary = [
     { label: "Metas ativas", value: goalsSummary.active },
     { label: "Metas concluídas", value: goalsSummary.completed },
