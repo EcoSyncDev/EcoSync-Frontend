@@ -3,26 +3,30 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
+import { signupWithFormData } from "@/lib/auth-form";
 
 const inputClassName = "min-h-11 w-full rounded-xl border bg-background px-4 text-base text-foreground placeholder:text-muted";
 
 export function SignupForm() {
   const router = useRouter();
   const [showPasswords, setShowPasswords] = useState(false);
-  const [feedback, setFeedback] = useState<"mismatch" | null>(null);
+  const [feedback, setFeedback] = useState<"mismatch" | "error" | null>(null);
   const confirmationRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const fields = new FormData(event.currentTarget);
-
-    if (fields.get("password") !== fields.get("confirmPassword")) {
-      setFeedback("mismatch");
-      confirmationRef.current?.focus();
-      return;
+    setFeedback(null);
+    try {
+      const user = signupWithFormData(new FormData(event.currentTarget));
+      if (!user) {
+        setFeedback("mismatch");
+        confirmationRef.current?.focus();
+        return;
+      }
+      router.push("/onboarding");
+    } catch {
+      setFeedback("error");
     }
-
-    router.push("/onboarding");
   }
 
   return (
@@ -54,8 +58,8 @@ export function SignupForm() {
           <label htmlFor="signup-confirm-password" className="mb-2 block text-sm font-medium">Confirmar senha</label>
           <input ref={confirmationRef} id="signup-confirm-password" name="confirmPassword" type={showPasswords ? "text" : "password"} autoComplete="new-password" required minLength={8} aria-invalid={feedback === "mismatch" || undefined} aria-describedby={feedback === "mismatch" ? "signup-error" : undefined} placeholder="Repita sua senha" className={inputClassName} />
         </div>
-        <p id="signup-error" role="alert" aria-atomic="true" className={feedback === "mismatch" ? "rounded-xl border border-outline bg-background p-3 text-sm leading-6 text-foreground" : "sr-only"}>
-          {feedback === "mismatch" ? "As senhas não coincidem. Confira a confirmação de senha." : ""}
+        <p id="signup-error" role="alert" aria-atomic="true" className={feedback ? "rounded-xl border border-outline bg-background p-3 text-sm leading-6 text-foreground" : "sr-only"}>
+          {feedback === "mismatch" ? "As senhas não coincidem. Confira a confirmação de senha." : feedback === "error" ? "Não foi possível criar sua conta. Tente novamente." : ""}
         </p>
         <button type="submit" className="min-h-12 w-full cursor-pointer rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-on-brand transition-colors hover:bg-brand-hover">Criar conta</button>
         <p className="text-center text-[0.6875rem] leading-4 text-muted">Ao criar uma conta, você concorda com os Termos de Uso e a Política de Privacidade.</p>

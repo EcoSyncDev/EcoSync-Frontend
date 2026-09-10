@@ -1,20 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { loginWithFormData } from "@/lib/auth-form";
 
 export function LoginForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    setHasError(false);
+    try {
+      const user = loginWithFormData(new FormData(event.currentTarget));
+      if (user) router.push("/");
+    } catch {
+      setHasError(true);
+    }
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+      <form onSubmit={handleSubmit} onChange={() => setHasError(false)} className="mt-6 space-y-4">
         <div>
           <label htmlFor="email" className="mb-2 block text-sm font-medium">E-mail</label>
           <input id="email" name="email" type="email" autoComplete="username" required placeholder="voce@exemplo.com" className="min-h-12 w-full rounded-xl border bg-background px-4 text-base text-foreground placeholder:text-muted" />
@@ -43,8 +52,8 @@ export function LoginForm() {
         </div>
 
         <button type="submit" className="min-h-12 w-full cursor-pointer rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-on-brand transition-colors hover:bg-brand-hover">Entrar</button>
-        <p role="status" aria-live="polite" aria-atomic="true" className={submitted ? "rounded-xl border border-outline bg-brand-light p-3 text-sm leading-6 text-foreground" : "sr-only"}>
-          {submitted ? "Login demonstrativo. A autenticação ainda não está disponível." : ""}
+        <p role="alert" aria-atomic="true" className={hasError ? "rounded-xl border border-outline bg-brand-light p-3 text-sm leading-6 text-foreground" : "sr-only"}>
+          {hasError ? "Não foi possível entrar. Tente novamente." : ""}
         </p>
       </form>
 
