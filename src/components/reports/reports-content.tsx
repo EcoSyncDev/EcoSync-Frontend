@@ -6,14 +6,14 @@ import { DataState } from "@/components/ui/data-state";
 import { ExportReportDialog } from "@/components/reports/export-report-dialog";
 import { ReportChart } from "@/components/reports/report-chart";
 import { ReportComparison } from "@/components/reports/report-comparison";
-import { formatReportValue, getReports, reportMetrics, reportPeriods, sumReportPoints, type ReportPeriod } from "@/services/reports-service";
-
-type ReportsStatus = "success" | "loading" | "empty" | "error";
+import { formatReportValue, getReports, reportMetrics, reportPeriods, sumReportPoints } from "@/services/reports-service";
+import type { ReportPeriod } from "@/types/reports";
+import type { DataStatus } from "@/types/ui";
 
 export function ReportsContent() {
   const [period, setPeriod] = useState<ReportPeriod>("month");
   // Para demonstrar os estados localmente, altere apenas o valor inicial.
-  const [status] = useState<ReportsStatus>("success");
+  const [status] = useState<DataStatus>("success");
 
   if (status !== "success") {
     return (

@@ -1,5 +1,5 @@
 import { Icon } from "@/components/ui/icon";
-import type { Goal } from "@/services/goals-service";
+import type { Goal } from "@/types/goals";
 
 export function GoalCard({ goal }: { goal: Goal }) {
   const percentage = Math.min(100, Math.max(0, goal.progress));

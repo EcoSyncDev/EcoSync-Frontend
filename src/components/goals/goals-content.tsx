@@ -4,15 +4,15 @@ import { useState } from "react";
 import { GoalCard } from "@/components/goals/goal-card";
 import { NewGoalDialog } from "@/components/goals/new-goal-dialog";
 import { DataState } from "@/components/ui/data-state";
-import { getGoals, getGoalsSummary, goalFilters, type GoalFilter } from "@/services/goals-service";
-
-type GoalsStatus = "success" | "loading" | "empty" | "error";
+import { getGoals, getGoalsSummary, goalFilters } from "@/services/goals-service";
+import type { GoalFilter } from "@/types/goals";
+import type { DataStatus } from "@/types/ui";
 
 export function GoalsContent() {
   const [filter, setFilter] = useState<GoalFilter>("all");
   const [feedback, setFeedback] = useState("");
   // Para demonstrar os estados localmente, altere apenas o valor inicial.
-  const [status] = useState<GoalsStatus>("success");
+  const [status] = useState<DataStatus>("success");
 
   if (status !== "success") {
     return (

@@ -1,23 +1,16 @@
 import { recentActions, sustainableGoals } from "@/data/dashboard-activity";
 import { dashboardIndicators } from "@/data/dashboard-indicators";
 import { energyConsumption, environmentalImpact } from "@/data/dashboard-overview";
+import type { DashboardActivity, DashboardIndicator, DashboardOverview } from "@/types/dashboard";
 
-export type { RecentAction, SustainableGoal } from "@/data/dashboard-activity";
-
-export function getDashboardIndicators(): typeof dashboardIndicators {
+export function getDashboardIndicators(): readonly (DashboardIndicator & { id: string })[] {
   return dashboardIndicators;
 }
 
-export function getDashboardOverview(): {
-  energyConsumption: typeof energyConsumption;
-  environmentalImpact: typeof environmentalImpact;
-} {
+export function getDashboardOverview(): DashboardOverview {
   return { energyConsumption, environmentalImpact };
 }
 
-export function getDashboardActivity(): {
-  recentActions: typeof recentActions;
-  sustainableGoals: typeof sustainableGoals;
-} {
+export function getDashboardActivity(): DashboardActivity {
   return { recentActions, sustainableGoals };
 }

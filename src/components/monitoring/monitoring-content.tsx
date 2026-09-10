@@ -4,17 +4,17 @@ import { useState } from "react";
 import { IndicatorCard } from "@/components/dashboard/indicator-card";
 import { ConsumptionChart } from "@/components/monitoring/consumption-chart";
 import { DataState } from "@/components/ui/data-state";
-import { getMonitoringData, monitoringPeriods, type MonitoringPeriod } from "@/services/monitoring-service";
+import { getMonitoringData, monitoringPeriods } from "@/services/monitoring-service";
+import type { MonitoringPeriod } from "@/types/monitoring";
+import type { DataStatus } from "@/types/ui";
 
 const number = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
 const currency = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
-type MonitoringStatus = "success" | "loading" | "empty" | "error";
-
 export function MonitoringContent() {
   const [period, setPeriod] = useState<MonitoringPeriod>("30d");
   // Para demonstrar os estados localmente, altere apenas o valor inicial.
-  const [status] = useState<MonitoringStatus>("success");
+  const [status] = useState<DataStatus>("success");
 
   if (status !== "success") {
     return (

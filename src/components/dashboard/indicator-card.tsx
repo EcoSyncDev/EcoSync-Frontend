@@ -1,15 +1,7 @@
-import { Icon, type IconName } from "@/components/ui/icon";
+import { Icon } from "@/components/ui/icon";
+import type { DashboardIndicator } from "@/types/dashboard";
 
-export type IndicatorCardProps = {
-  title: string;
-  value: string;
-  description: string;
-  icon: IconName;
-  comparison: string;
-  trend: "up" | "down";
-};
-
-export function IndicatorCard({ title, value, description, icon, comparison, trend }: IndicatorCardProps) {
+export function IndicatorCard({ title, value, description, icon, comparison, trend }: DashboardIndicator) {
   return (
     <article className="flex h-full min-w-0 flex-col rounded-2xl border border-outline bg-surface p-5 shadow-sm">
       <div className="flex items-center justify-between gap-3">

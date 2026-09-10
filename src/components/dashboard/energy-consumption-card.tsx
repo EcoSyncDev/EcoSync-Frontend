@@ -1,5 +1,7 @@
+import type { EnergyConsumptionPoint } from "@/types/dashboard";
+
 type EnergyConsumptionCardProps = {
-  data: readonly { day: string; kwh: number }[];
+  data: readonly EnergyConsumptionPoint[];
 };
 
 export function EnergyConsumptionCard({ data }: EnergyConsumptionCardProps) {

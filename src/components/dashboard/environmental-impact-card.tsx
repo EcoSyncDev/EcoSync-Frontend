@@ -1,14 +1,7 @@
 import { Icon } from "@/components/ui/icon";
+import type { EnvironmentalImpact } from "@/types/dashboard";
 
-type EnvironmentalImpactCardProps = {
-  progress: number;
-  label: string;
-  carbonAvoided: string;
-  waterSaved: string;
-  comparison: string;
-};
-
-export function EnvironmentalImpactCard({ progress, label, carbonAvoided, waterSaved, comparison }: EnvironmentalImpactCardProps) {
+export function EnvironmentalImpactCard({ progress, label, carbonAvoided, waterSaved, comparison }: EnvironmentalImpact) {
   const percentage = Math.min(100, Math.max(0, progress));
 
   return (

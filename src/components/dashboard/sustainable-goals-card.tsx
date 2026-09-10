@@ -1,4 +1,4 @@
-import type { SustainableGoal } from "@/services/dashboard-service";
+import type { SustainableGoal } from "@/types/dashboard";
 
 export function SustainableGoalsCard({ goals }: { goals: readonly SustainableGoal[] }) {
   return (

@@ -1,3 +1,5 @@
+import type { EnergyConsumptionPoint, EnvironmentalImpact } from "@/types/dashboard";
+
 // Dados demonstrativos, sem integração com o backend.
 export const energyConsumption = [
   { day: "Seg", kwh: 32 },
@@ -7,7 +9,7 @@ export const energyConsumption = [
   { day: "Sex", kwh: 44 },
   { day: "Sáb", kwh: 29 },
   { day: "Dom", kwh: 24 },
-] as const;
+] as const satisfies readonly EnergyConsumptionPoint[];
 
 export const environmentalImpact = {
   progress: 72,
@@ -15,4 +17,4 @@ export const environmentalImpact = {
   carbonAvoided: "32,8 kg",
   waterSaved: "580 L",
   comparison: "8 pontos percentuais acima do mês anterior",
-} as const;
+} as const satisfies EnvironmentalImpact;

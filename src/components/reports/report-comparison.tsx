@@ -1,4 +1,5 @@
-import { formatReportValue, reportComparison, reportMetrics, type ReportValues } from "@/services/reports-service";
+import { formatReportValue, reportComparison, reportMetrics } from "@/services/reports-service";
+import type { ReportValues } from "@/types/reports";
 
 export function ReportComparison({ current, previous, previousLabel }: { current: ReportValues; previous: ReportValues; previousLabel: string }) {
   return (

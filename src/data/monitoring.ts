@@ -1,21 +1,11 @@
+import type { MonitoringData, MonitoringPeriod } from "@/types/monitoring";
+
 export const monitoringPeriods = [
   { id: "7d", label: "7 dias" },
   { id: "30d", label: "30 dias" },
   { id: "3m", label: "3 meses" },
   { id: "12m", label: "12 meses" },
-] as const;
-
-export type MonitoringPeriod = (typeof monitoringPeriods)[number]["id"];
-export type ConsumptionPoint = { label: string; energy: number; water: number };
-type MonitoringData = {
-  days: number;
-  grouping: string;
-  points: readonly ConsumptionPoint[];
-  energyReduction: number;
-  waterReduction: number;
-  carbonAvoided: number;
-  savings: number;
-};
+] as const satisfies readonly { id: MonitoringPeriod; label: string }[];
 
 // Cenários independentes e ilustrativos. Totais e médias são calculados a partir
 // dos pontos, para que os resumos correspondam ao histórico selecionado.

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { IconName } from "@/types/ui";
 
 const paths = {
   energy: <path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" />,
@@ -12,9 +13,7 @@ const paths = {
   target: <><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1" /></>,
   report: <><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" /><path d="M14 3v5h5M9 12h6m-6 4h6" /></>,
   settings: <><path d="m9 3-1 3-3 1-2 3 2 2-1 3 2 3 3-1 2 4h3l1-3 3-1 2-3-2-2 1-3-2-3-3 1-2-4Z" /><circle cx="12" cy="12" r="3" /></>,
-} satisfies Record<string, ReactNode>;
-
-export type IconName = keyof typeof paths;
+} satisfies Record<IconName, ReactNode>;
 
 export function Icon({ name, className = "size-5" }: { name: IconName; className?: string }) {
   return (

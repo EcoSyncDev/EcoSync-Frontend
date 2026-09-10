@@ -1,5 +1,5 @@
 import { Icon } from "@/components/ui/icon";
-import type { RecentAction } from "@/services/dashboard-service";
+import type { RecentAction } from "@/types/dashboard";
 
 export function RecentActionsCard({ actions }: { actions: readonly RecentAction[] }) {
   return (

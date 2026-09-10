@@ -1,4 +1,4 @@
-import type { ConsumptionPoint } from "@/services/monitoring-service";
+import type { ConsumptionPoint } from "@/types/monitoring";
 
 type ConsumptionChartProps = {
   title: string;

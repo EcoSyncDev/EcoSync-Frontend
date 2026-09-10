@@ -1,10 +1,12 @@
 "use client";
 
+import type { DataStatus } from "@/types/ui";
+
 type DataStateProps = {
   title?: string;
   description?: string;
 } & (
-  | { status: "loading" | "empty"; onRetry?: never }
+  | { status: Exclude<DataStatus, "success" | "error">; onRetry?: never }
   | { status: "error"; onRetry?: () => void }
 );
 

@@ -1,8 +1,8 @@
-import { monitoringData, type MonitoringPeriod } from "@/data/monitoring";
+import { monitoringData } from "@/data/monitoring";
+import type { MonitoringData, MonitoringPeriod } from "@/types/monitoring";
 
 export { monitoringPeriods } from "@/data/monitoring";
-export type { ConsumptionPoint, MonitoringPeriod } from "@/data/monitoring";
 
-export function getMonitoringData(period: MonitoringPeriod): (typeof monitoringData)[MonitoringPeriod] {
+export function getMonitoringData(period: MonitoringPeriod): MonitoringData {
   return monitoringData[period];
 }
