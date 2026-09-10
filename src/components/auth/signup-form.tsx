@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
-import { signupWithFormData } from "@/lib/auth-form";
+import { useAuth } from "@/components/auth/auth-provider";
+import { readSignupData } from "@/lib/auth-form";
 
 const inputClassName = "min-h-11 w-full rounded-xl border bg-background px-4 text-base text-foreground placeholder:text-muted";
 
 export function SignupForm() {
   const router = useRouter();
+  const { signup } = useAuth();
   const [showPasswords, setShowPasswords] = useState(false);
   const [feedback, setFeedback] = useState<"mismatch" | "error" | null>(null);
   const confirmationRef = useRef<HTMLInputElement>(null);
@@ -17,13 +19,14 @@ export function SignupForm() {
     event.preventDefault();
     setFeedback(null);
     try {
-      const user = signupWithFormData(new FormData(event.currentTarget));
-      if (!user) {
+      const data = readSignupData(new FormData(event.currentTarget));
+      if (!data) {
         setFeedback("mismatch");
         confirmationRef.current?.focus();
         return;
       }
-      router.push("/onboarding");
+      const user = signup(data);
+      if (user) router.push("/onboarding");
     } catch {
       setFeedback("error");
     }

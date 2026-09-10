@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { loginWithFormData } from "@/lib/auth-form";
+import { useAuth } from "@/components/auth/auth-provider";
+import { readLoginCredentials } from "@/lib/auth-form";
 
 export function LoginForm() {
   const router = useRouter();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -14,7 +16,8 @@ export function LoginForm() {
     event.preventDefault();
     setHasError(false);
     try {
-      const user = loginWithFormData(new FormData(event.currentTarget));
+      const credentials = readLoginCredentials(new FormData(event.currentTarget));
+      const user = login(credentials);
       if (user) router.push("/");
     } catch {
       setHasError(true);

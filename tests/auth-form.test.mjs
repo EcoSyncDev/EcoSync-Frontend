@@ -2,10 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createModuleLoader } from "./load-typescript.mjs";
 
-function scenario() {
-  const load = createModuleLoader();
-  return { service: load("@/services/auth-service"), forms: load("@/lib/auth-form") };
-}
+const { readLoginCredentials, readSignupData } = createModuleLoader()("@/lib/auth-form");
 
 function fields(values) {
   const data = new FormData();
@@ -13,48 +10,39 @@ function fields(values) {
   return data;
 }
 
-test("login form data forwards only credentials to the service and returns its user", (t) => {
-  const { service, forms } = scenario();
+test("login fields produce only credentials, ignoring remember and unrelated fields", () => {
   const credentials = { email: "ana@example.com", password: "demo-password" };
-  const login = service.login;
-  const spy = t.mock.method(service, "login", login);
-  const user = forms.loginWithFormData(fields({ ...credentials, remember: "on" }));
-  assert.equal(spy.mock.callCount(), 1);
-  assert.deepEqual(spy.mock.calls[0].arguments, [credentials]);
-  assert.equal(user.email, credentials.email);
-  assert.equal(user.password, undefined);
-  assert.deepEqual(user, service.getCurrentUser());
+  const result = readLoginCredentials(fields({ ...credentials, remember: "on", name: "Ana" }));
+  assert.deepEqual(result, credentials);
 });
 
-test("signup form data forwards name, email and password without confirmation", (t) => {
-  const { service, forms } = scenario();
+test("signup fields produce name, email and password without confirmation", () => {
   const data = { name: "Ana", email: "ana@example.com", password: "demo-password" };
-  const signup = service.signup;
-  const spy = t.mock.method(service, "signup", signup);
-  const user = forms.signupWithFormData(fields({ ...data, confirmPassword: data.password }));
-  assert.equal(spy.mock.callCount(), 1);
-  assert.deepEqual(spy.mock.calls[0].arguments, [data]);
-  assert.equal(user.name, data.name);
-  assert.equal(user.email, data.email);
-  assert.equal(user.password, undefined);
-  assert.deepEqual(user, service.getCurrentUser());
+  const result = readSignupData(fields({ ...data, confirmPassword: data.password, remember: "on" }));
+  assert.deepEqual(result, data);
 });
 
-test("mismatched confirmation prevents signup and leaves the session unchanged", (t) => {
-  const { service, forms } = scenario();
-  const spy = t.mock.method(service, "signup");
-  const result = forms.signupWithFormData(fields({ name: "Ana", email: "ana@example.com", password: "demo-password", confirmPassword: "different-password" }));
-  assert.equal(result, null);
-  assert.equal(spy.mock.callCount(), 0);
-  assert.equal(service.getCurrentUser(), null);
+test("mismatched or missing confirmation does not produce signup data", () => {
+  const data = { name: "Ana", email: "ana@example.com", password: "demo-password" };
+  assert.equal(readSignupData(fields({ ...data, confirmPassword: "different-password" })), null);
+  assert.equal(readSignupData(fields(data)), null);
 });
 
-for (const [operation, helper] of [["login", "loginWithFormData"], ["signup", "signupWithFormData"]]) {
-  test(`${operation} failures propagate for the form to handle without returning success`, (t) => {
-    const { service, forms } = scenario();
-    t.mock.method(service, operation, () => { throw new Error("Service failure"); });
-    const data = fields({ name: "Ana", email: "ana@example.com", password: "demo-password", confirmPassword: "demo-password" });
-    assert.throws(() => forms[helper](data), /Service failure/);
-    assert.equal(service.getCurrentUser(), null);
+test("reading fields preserves their values and does not mutate the form data", () => {
+  const data = { name: " Ana ", email: "ana@example.com", password: " demo-password " };
+  const form = fields({ ...data, confirmPassword: data.password });
+  const before = [...form.entries()];
+  assert.deepEqual(readLoginCredentials(form), { email: data.email, password: data.password });
+  const result = readSignupData(form);
+  assert.deepEqual(result, data);
+  result.name = "Changed";
+  assert.deepEqual([...form.entries()], before);
+  assert.deepEqual(readSignupData(form), data);
+});
+
+test("missing fields retain empty-string defaults for native form validation", () => {
+  assert.deepEqual(readLoginCredentials(new FormData()), { email: "", password: "" });
+  assert.deepEqual(readSignupData(fields({ password: "demo-password", confirmPassword: "demo-password" })), {
+    name: "", email: "", password: "demo-password",
   });
-}
+});

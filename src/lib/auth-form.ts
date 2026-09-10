@@ -1,23 +1,20 @@
-import { login, signup } from "@/services/auth-service";
-import type { AuthUser, LoginCredentials, SignupData } from "@/types/auth";
+import type { LoginCredentials, SignupData } from "@/types/auth";
 
 // A validação nativa dos campos acontece no formulário antes do submit.
-export function loginWithFormData(fields: FormData): AuthUser {
-  const credentials: LoginCredentials = {
+export function readLoginCredentials(fields: FormData): LoginCredentials {
+  return {
     email: String(fields.get("email") ?? ""),
     password: String(fields.get("password") ?? ""),
   };
-  return login(credentials);
 }
 
-// null indica confirmação incompatível; nesse caso o serviço não é chamado.
-export function signupWithFormData(fields: FormData): AuthUser | null {
+// null indica confirmação incompatível, antes de qualquer autenticação.
+export function readSignupData(fields: FormData): SignupData | null {
   if (fields.get("password") !== fields.get("confirmPassword")) return null;
 
-  const data: SignupData = {
+  return {
     name: String(fields.get("name") ?? ""),
     email: String(fields.get("email") ?? ""),
     password: String(fields.get("password") ?? ""),
   };
-  return signup(data);
 }
