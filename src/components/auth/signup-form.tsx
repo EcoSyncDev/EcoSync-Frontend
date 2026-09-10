@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
 
 const inputClassName = "min-h-11 w-full rounded-xl border bg-background px-4 text-base text-foreground placeholder:text-muted";
 
 export function SignupForm() {
+  const router = useRouter();
   const [showPasswords, setShowPasswords] = useState(false);
-  const [feedback, setFeedback] = useState<"mismatch" | "demo" | null>(null);
+  const [feedback, setFeedback] = useState<"mismatch" | null>(null);
   const confirmationRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -20,7 +22,7 @@ export function SignupForm() {
       return;
     }
 
-    setFeedback("demo");
+    router.push("/onboarding");
   }
 
   return (
@@ -57,9 +59,6 @@ export function SignupForm() {
         </p>
         <button type="submit" className="min-h-12 w-full cursor-pointer rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-on-brand transition-colors hover:bg-brand-hover">Criar conta</button>
         <p className="text-center text-[0.6875rem] leading-4 text-muted">Ao criar uma conta, você concorda com os Termos de Uso e a Política de Privacidade.</p>
-        <p role="status" aria-live="polite" aria-atomic="true" className={feedback === "demo" ? "rounded-xl border border-outline bg-brand-light p-3 text-sm leading-6 text-foreground" : "sr-only"}>
-          {feedback === "demo" ? "Cadastro demonstrativo. Nenhuma conta foi criada; a autenticação ainda não está disponível." : ""}
-        </p>
       </form>
       <p className="mt-4 border-t border-outline pt-4 text-center text-sm leading-7 text-muted">
         Já tem uma conta?{" "}
