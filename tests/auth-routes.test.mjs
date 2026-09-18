@@ -2,10 +2,37 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createModuleLoader } from "./load-typescript.mjs";
 
-const { isPublicRoute, isProtectedRoute, requiresAuthentication } = createModuleLoader()("@/lib/auth-routes");
+const { isPublicRoute, isProtectedRoute, requiresAuthentication, shouldRedirectAuthenticatedUser } = createModuleLoader()("@/lib/auth-routes");
 
 const publicPaths = ["/login", "/cadastro", "/esqueci-senha"];
 const protectedPaths = ["/", "/monitoramento", "/metas", "/relatorios", "/configuracoes", "/onboarding"];
+
+for (const pathname of ["/login", "/cadastro"]) {
+  test(`${pathname} redirects authenticated users, including with a trailing slash`, () => {
+    assert.equal(shouldRedirectAuthenticatedUser(pathname), true);
+    assert.equal(shouldRedirectAuthenticatedUser(`${pathname}/`), true);
+    assert.equal(isPublicRoute(pathname), true);
+  });
+}
+
+test("password recovery remains accessible to authenticated users", () => {
+  assert.equal(shouldRedirectAuthenticatedUser("/esqueci-senha"), false);
+  assert.equal(shouldRedirectAuthenticatedUser("/esqueci-senha/"), false);
+  assert.equal(isPublicRoute("/esqueci-senha"), true);
+});
+
+test("protected routes do not redirect authenticated users away", () => {
+  for (const pathname of protectedPaths) {
+    assert.equal(shouldRedirectAuthenticatedUser(pathname), false);
+    assert.equal(isProtectedRoute(pathname), true);
+  }
+});
+
+test("authenticated redirects use exact routes, not unknown paths or descendants", () => {
+  for (const pathname of ["/desconhecida", "/login-extra", "/login/ajuda", "/cadastro/novo", "/LOGIN", ""]) {
+    assert.equal(shouldRedirectAuthenticatedUser(pathname), false);
+  }
+});
 
 for (const pathname of publicPaths) {
   test(`${pathname} is public and does not require authentication`, () => {

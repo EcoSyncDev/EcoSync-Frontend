@@ -1,4 +1,5 @@
-const publicRoutes: readonly string[] = ["/login", "/cadastro", "/esqueci-senha"];
+const authOnlyRoutes: readonly string[] = ["/login", "/cadastro"];
+const publicRoutes: readonly string[] = [...authOnlyRoutes, "/esqueci-senha"];
 
 const protectedRoutes: readonly string[] = [
   "/",
@@ -15,6 +16,11 @@ function normalizePathname(pathname: string): string {
 
 export function isPublicRoute(pathname: string): boolean {
   return publicRoutes.includes(normalizePathname(pathname));
+}
+
+// Classifica as rotas que deixam de fazer sentido após autenticar.
+export function shouldRedirectAuthenticatedUser(pathname: string): boolean {
+  return authOnlyRoutes.includes(normalizePathname(pathname));
 }
 
 // Identifica apenas as rotas protegidas explicitamente cadastradas.
