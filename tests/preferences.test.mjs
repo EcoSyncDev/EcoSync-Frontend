@@ -14,9 +14,10 @@ function preferencesBrowser(saved = null, blocked = false) {
     getItem: (key) => { if (blocked) throw new Error("Blocked"); return storage.get(key) ?? null; },
     setItem: (key, value) => { if (blocked) throw new Error("Blocked"); storage.set(key, value); },
   };
-  const context = vm.createContext({ exports: {}, window: { localStorage } });
+  const window = Object.assign(new EventTarget(), { localStorage });
+  const context = vm.createContext({ exports: {}, window, Event });
   vm.runInContext(source, context);
-  return { api: context.exports, storage };
+  return { api: context.exports, storage, window };
 }
 
 const defaults = { theme: "light", notificationsEnabled: true, consumptionAlerts: true, goalAlerts: true };
@@ -42,6 +43,17 @@ test("preferences update partially and preserve unchanged values", () => {
   assert.deepEqual(JSON.parse(env.storage.get("ecosync-user-preferences")), {
     theme: "dark", notificationsEnabled: true, consumptionAlerts: false, goalAlerts: true,
   });
+});
+
+test("preference subscriptions notify the current tab and clean up", () => {
+  const env = preferencesBrowser();
+  let changes = 0;
+  const unsubscribe = env.api.subscribePreferences(() => changes++);
+  env.api.updatePreferences({ goalAlerts: false });
+  assert.equal(changes, 1);
+  unsubscribe();
+  env.api.updatePreferences({ goalAlerts: true });
+  assert.equal(changes, 1);
 });
 
 test("preferences replace invalid persisted fields with defaults without throwing", () => {

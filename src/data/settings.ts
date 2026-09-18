@@ -19,15 +19,10 @@ export const initialPreferences: Preferences = {
 };
 
 export const notificationOptions = [
-  { id: "consumption", label: "Alertas de consumo elevado" },
-  { id: "goals", label: "Metas próximas do prazo" },
-  { id: "reports", label: "Relatório mensal" },
-  { id: "recommendations", label: "Novas recomendações sustentáveis" },
+  { id: "notificationsEnabled", label: "Receber notificações gerais" },
+  { id: "consumptionAlerts", label: "Alertas de consumo elevado" },
+  { id: "goalAlerts", label: "Metas próximas do prazo" },
 ] as const;
-export type Notifications = Record<(typeof notificationOptions)[number]["id"], boolean>;
-export const initialNotifications: Notifications = {
-  consumption: true, goals: true, reports: true, recommendations: false,
-};
 
 export const appearanceOptions = [
   { id: "light", label: "Claro" },

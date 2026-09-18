@@ -1,6 +1,7 @@
 import type { UserPreferences, UserThemePreference } from "@/types/preferences";
 
 export const preferencesStorageKey = "ecosync-user-preferences";
+const preferencesEvent = "ecosync-preferences-change";
 
 export const DEFAULT_USER_PREFERENCES: Readonly<UserPreferences> = {
   theme: "light",
@@ -45,7 +46,7 @@ export function getPreferences(): UserPreferences {
     const saved = storage.getItem(preferencesStorageKey);
     memoryPreferences = saved === null ? { ...DEFAULT_USER_PREFERENCES } : normalizePreferences(JSON.parse(saved));
   } catch {
-    // Armazenamento local Ã© temporÃ¡rio; a futura integraÃ§Ã£o substituirÃ¡ esta camada pelo backend.
+    // Local persistence is temporary until this service is connected to the backend.
   }
   return { ...memoryPreferences };
 }
@@ -57,8 +58,22 @@ export function updatePreferences(changes: Partial<UserPreferences>): UserPrefer
     try {
       storage.setItem(preferencesStorageKey, JSON.stringify(memoryPreferences));
     } catch {
-      // MantÃ©m a alteraÃ§Ã£o em memÃ³ria se o navegador bloquear o armazenamento.
+      // Keep the update in memory when the browser blocks storage.
     }
   }
+  if (typeof window !== "undefined") window.dispatchEvent(new Event(preferencesEvent));
   return { ...memoryPreferences };
+}
+
+export function subscribePreferences(notify: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === preferencesStorageKey) notify();
+  };
+  window.addEventListener("storage", onStorage);
+  window.addEventListener(preferencesEvent, notify);
+  return () => {
+    window.removeEventListener("storage", onStorage);
+    window.removeEventListener(preferencesEvent, notify);
+  };
 }
