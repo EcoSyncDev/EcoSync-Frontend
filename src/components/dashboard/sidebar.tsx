@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { Icon, type IconName } from "@/components/ui/icon";
+import { useAuth } from "@/components/auth/auth-provider";
+import { Icon } from "@/components/ui/icon";
+import type { IconName } from "@/types/ui";
 
 const navigation: { label: string; icon: IconName; href?: string }[] = [
   { label: "Dashboard", icon: "dashboard", href: "/" },
@@ -15,6 +17,16 @@ const navigation: { label: string; icon: IconName; href?: string }[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuth();
+  const userName = user?.name?.trim() || "Equipe EcoSync";
+  const userEmail = user?.email?.trim() || "Perfil demonstrativo";
+  const userInitials = userName.split(/\s+/).slice(0, 2).map((name) => name[0]).join("").toUpperCase();
+
+  function handleLogout() {
+    logout();
+    router.replace("/login");
+  }
 
   return (
     <aside className="border-b border-outline bg-sidebar lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:overflow-y-auto lg:border-r lg:border-b-0">
@@ -52,12 +64,16 @@ export function Sidebar() {
       </nav>
       <div className="mt-auto hidden border-t border-outline p-5 lg:block">
         <div className="flex items-center gap-3 rounded-xl bg-background p-3">
-          <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-light text-sm font-semibold text-brand">ES</span>
+          <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-light text-sm font-semibold text-brand">{userInitials}</span>
           <div>
-            <p className="text-sm font-medium text-brand-dark">Equipe EcoSync</p>
-            <p className="mt-0.5 text-xs text-muted">Perfil demonstrativo</p>
+            <p className="text-sm font-medium text-brand-dark">{userName}</p>
+            <p className="mt-0.5 text-xs text-muted">{userEmail}</p>
           </div>
         </div>
+        <button type="button" onClick={handleLogout} className="mt-2 flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-medium text-muted transition-colors hover:bg-brand-light/70 hover:text-brand-dark">
+          <Icon name="logout" className="size-5 shrink-0" />
+          Sair
+        </button>
       </div>
     </aside>
   );

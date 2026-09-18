@@ -2,14 +2,32 @@
 
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { DataState } from "@/components/ui/data-state";
 import { ExportReportDialog } from "@/components/reports/export-report-dialog";
 import { ReportChart } from "@/components/reports/report-chart";
 import { ReportComparison } from "@/components/reports/report-comparison";
-import { formatReportValue, reportMetrics, reportPeriods, reports, sumReportPoints, type ReportPeriod } from "@/data/reports";
+import { formatReportValue, getReports, reportMetrics, reportPeriods, sumReportPoints } from "@/services/reports-service";
+import type { ReportPeriod } from "@/types/reports";
+import type { DataStatus } from "@/types/ui";
 
 export function ReportsContent() {
   const [period, setPeriod] = useState<ReportPeriod>("month");
-  const data = reports[period];
+  // Para demonstrar os estados localmente, altere apenas o valor inicial.
+  const [status] = useState<DataStatus>("success");
+
+  if (status !== "success") {
+    return (
+      <div className="mt-8">
+        <DataState
+          status={status}
+          title={status === "empty" ? "Nenhum relatório disponível" : status === "error" ? "Não foi possível carregar os relatórios" : undefined}
+          description={status === "empty" ? "Os relatórios aparecerão aqui quando houver dados suficientes." : undefined}
+        />
+      </div>
+    );
+  }
+
+  const data = getReports(period);
   const totals = sumReportPoints(data.points);
 
   return (

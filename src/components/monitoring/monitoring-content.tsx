@@ -3,14 +3,28 @@
 import { useState } from "react";
 import { IndicatorCard } from "@/components/dashboard/indicator-card";
 import { ConsumptionChart } from "@/components/monitoring/consumption-chart";
-import { monitoringData, monitoringPeriods, type MonitoringPeriod } from "@/data/monitoring";
+import { DataState } from "@/components/ui/data-state";
+import { getMonitoringData, monitoringPeriods } from "@/services/monitoring-service";
+import type { MonitoringPeriod } from "@/types/monitoring";
+import type { DataStatus } from "@/types/ui";
 
 const number = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
 const currency = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
 export function MonitoringContent() {
   const [period, setPeriod] = useState<MonitoringPeriod>("30d");
-  const data = monitoringData[period];
+  // Para demonstrar os estados localmente, altere apenas o valor inicial.
+  const [status] = useState<DataStatus>("success");
+
+  if (status !== "success") {
+    return (
+      <div className="mt-8">
+        <DataState status={status} />
+      </div>
+    );
+  }
+
+  const data = getMonitoringData(period);
   const label = monitoringPeriods.find((option) => option.id === period)!.label;
   const totals = data.points.reduce((sum, point) => ({ energy: sum.energy + point.energy, water: sum.water + point.water }), { energy: 0, water: 0 });
   const complementary = [

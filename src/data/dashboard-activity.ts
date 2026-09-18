@@ -1,20 +1,4 @@
-import type { IconName } from "@/components/ui/icon";
-
-export type SustainableGoal = {
-  id: string;
-  title: string;
-  description: string;
-  progress: number;
-  status: string;
-};
-
-export type RecentAction = {
-  id: string;
-  title: string;
-  category: string;
-  timestamp: string;
-  icon: IconName;
-};
+import type { RecentAction, SustainableGoal } from "@/types/dashboard";
 
 // Metas e atividades ilustrativas, sem persistência ou dados reais.
 export const sustainableGoals: readonly SustainableGoal[] = [

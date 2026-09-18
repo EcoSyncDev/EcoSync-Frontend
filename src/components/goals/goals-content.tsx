@@ -3,12 +3,31 @@
 import { useState } from "react";
 import { GoalCard } from "@/components/goals/goal-card";
 import { NewGoalDialog } from "@/components/goals/new-goal-dialog";
-import { filterGoals, goalFilters, goalsSummary, type GoalFilter } from "@/data/goals";
+import { DataState } from "@/components/ui/data-state";
+import { getGoals, getGoalsSummary, goalFilters } from "@/services/goals-service";
+import type { GoalFilter } from "@/types/goals";
+import type { DataStatus } from "@/types/ui";
 
 export function GoalsContent() {
   const [filter, setFilter] = useState<GoalFilter>("all");
   const [feedback, setFeedback] = useState("");
-  const visibleGoals = filterGoals(filter);
+  // Para demonstrar os estados localmente, altere apenas o valor inicial.
+  const [status] = useState<DataStatus>("success");
+
+  if (status !== "success") {
+    return (
+      <div className="mt-8">
+        <DataState
+          status={status}
+          title={status === "empty" ? "Nenhuma meta encontrada" : status === "error" ? "Não foi possível carregar suas metas" : undefined}
+          description={status === "empty" ? "Crie sua primeira meta sustentável para acompanhar seu progresso." : undefined}
+        />
+      </div>
+    );
+  }
+
+  const visibleGoals = getGoals(filter);
+  const goalsSummary = getGoalsSummary();
   const summary = [
     { label: "Metas ativas", value: goalsSummary.active },
     { label: "Metas concluídas", value: goalsSummary.completed },

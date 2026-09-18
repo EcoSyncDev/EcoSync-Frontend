@@ -1,8 +1,5 @@
-import type { IconName } from "@/components/ui/icon";
-
-export type ReportMetric = "energy" | "water" | "carbon" | "savings";
-export type ReportValues = Record<ReportMetric, number>;
-export type ReportPoint = ReportValues & { label: string };
+import type { IconName } from "@/types/ui";
+import type { ReportData, ReportMetric, ReportPeriod, ReportPoint, ReportValues } from "@/types/reports";
 
 export const reportMetrics = [
   { id: "energy", label: "Energia consumida", unit: "kWh", icon: "energy", lowerIsBetter: true },
@@ -16,8 +13,7 @@ export const reportPeriods = [
   { id: "quarter", label: "Últimos 3 meses" },
   { id: "semester", label: "Últimos 6 meses" },
   { id: "year", label: "Este ano" },
-] as const;
-export type ReportPeriod = (typeof reportPeriods)[number]["id"];
+] as const satisfies readonly { id: ReportPeriod; label: string }[];
 
 export function sumReportPoints(points: readonly ReportPoint[]): ReportValues {
   return points.reduce((sum, point) => ({ energy: sum.energy + point.energy, water: sum.water + point.water, carbon: sum.carbon + point.carbon, savings: sum.savings + point.savings }), { energy: 0, water: 0, carbon: 0, savings: 0 });
@@ -41,15 +37,6 @@ const monthly: readonly ReportPoint[] = [
   { label: "Ago", energy: 282, water: 6978, carbon: 28.5, savings: 167.45 },
   { label: "Set", ...sumReportPoints(weekly) },
 ];
-
-type ReportData = {
-  range: string;
-  previousLabel: string;
-  grouping: string;
-  points: readonly ReportPoint[];
-  previous: ReportValues;
-  highlights: readonly string[];
-};
 
 export const reports: Record<ReportPeriod, ReportData> = {
   month: {

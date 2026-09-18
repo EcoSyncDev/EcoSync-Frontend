@@ -1,4 +1,4 @@
-import type { IndicatorCardProps } from "@/components/dashboard/indicator-card";
+import type { DashboardIndicator } from "@/types/dashboard";
 
 // Valores ilustrativos do mês atual, sem conexão com o backend.
 export const dashboardIndicators = [
@@ -38,4 +38,4 @@ export const dashboardIndicators = [
     comparison: "10% acima do mês anterior",
     trend: "up",
   },
-] satisfies (IndicatorCardProps & { id: string })[];
+] satisfies (DashboardIndicator & { id: string })[];

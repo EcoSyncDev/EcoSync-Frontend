@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthGuard } from "@/components/auth/auth-guard";
+import { AuthProvider } from "@/components/auth/auth-provider";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { themeInitializationScript } from "@/lib/theme";
 
@@ -27,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head><script id="ecosync-theme-init" dangerouslySetInnerHTML={{ __html: themeInitializationScript }} /></head>
-      <body className="min-h-full flex flex-col"><ThemeProvider>{children}</ThemeProvider></body>
+      <body className="min-h-full flex flex-col"><ThemeProvider><AuthProvider><AuthGuard>{children}</AuthGuard></AuthProvider></ThemeProvider></body>
     </html>
   );
 }

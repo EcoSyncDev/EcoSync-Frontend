@@ -1,7 +1,8 @@
 import { IndicatorCard } from "@/components/dashboard/indicator-card";
-import { dashboardIndicators } from "@/data/dashboard-indicators";
+import { getDashboardIndicators } from "@/services/dashboard-service";
 
 export function DashboardIndicators() {
+  const dashboardIndicators = getDashboardIndicators();
   return (
     <section aria-labelledby="indicators-title" className="mt-8">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
