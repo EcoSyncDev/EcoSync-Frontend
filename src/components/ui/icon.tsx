@@ -13,6 +13,7 @@ const paths = {
   target: <><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1" /></>,
   report: <><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z" /><path d="M14 3v5h5M9 12h6m-6 4h6" /></>,
   settings: <><path d="m9 3-1 3-3 1-2 3 2 2-1 3 2 3 3-1 2 4h3l1-3 3-1 2-3-2-2 1-3-2-3-3 1-2-4Z" /><circle cx="12" cy="12" r="3" /></>,
+  logout: <><path d="M10 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h5" /><path d="m15 16 4-4-4-4M19 12H9" /></>,
 } satisfies Record<IconName, ReactNode>;
 
 export function Icon({ name, className = "size-5" }: { name: IconName; className?: string }) {

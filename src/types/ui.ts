@@ -11,4 +11,5 @@ export type IconName =
   | "monitoring"
   | "target"
   | "report"
-  | "settings";
+  | "settings"
+  | "logout";

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { useAuth } from "@/components/auth/auth-provider";
 import { Icon } from "@/components/ui/icon";
 import type { IconName } from "@/types/ui";
 
@@ -16,6 +17,13 @@ const navigation: { label: string; icon: IconName; href?: string }[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+    router.replace("/login");
+  }
 
   return (
     <aside className="border-b border-outline bg-sidebar lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:overflow-y-auto lg:border-r lg:border-b-0">
@@ -59,6 +67,10 @@ export function Sidebar() {
             <p className="mt-0.5 text-xs text-muted">Perfil demonstrativo</p>
           </div>
         </div>
+        <button type="button" onClick={handleLogout} className="mt-2 flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-medium text-muted transition-colors hover:bg-brand-light/70 hover:text-brand-dark">
+          <Icon name="logout" className="size-5 shrink-0" />
+          Sair
+        </button>
       </div>
     </aside>
   );
