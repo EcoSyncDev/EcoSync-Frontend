@@ -18,7 +18,10 @@ const navigation: { label: string; icon: IconName; href?: string }[] = [
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+  const userName = user?.name?.trim() || "Equipe EcoSync";
+  const userEmail = user?.email?.trim() || "Perfil demonstrativo";
+  const userInitials = userName.split(/\s+/).slice(0, 2).map((name) => name[0]).join("").toUpperCase();
 
   function handleLogout() {
     logout();
@@ -61,10 +64,10 @@ export function Sidebar() {
       </nav>
       <div className="mt-auto hidden border-t border-outline p-5 lg:block">
         <div className="flex items-center gap-3 rounded-xl bg-background p-3">
-          <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-light text-sm font-semibold text-brand">ES</span>
+          <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-light text-sm font-semibold text-brand">{userInitials}</span>
           <div>
-            <p className="text-sm font-medium text-brand-dark">Equipe EcoSync</p>
-            <p className="mt-0.5 text-xs text-muted">Perfil demonstrativo</p>
+            <p className="text-sm font-medium text-brand-dark">{userName}</p>
+            <p className="mt-0.5 text-xs text-muted">{userEmail}</p>
           </div>
         </div>
         <button type="button" onClick={handleLogout} className="mt-2 flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-medium text-muted transition-colors hover:bg-brand-light/70 hover:text-brand-dark">
